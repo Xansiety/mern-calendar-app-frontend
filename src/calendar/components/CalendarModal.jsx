@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { addHours } from "date-fns";
-import DatePicker from "react-datepicker";
+import DatePicker, {registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from "react-modal";
+import es from 'date-fns/locale/es';
+
+registerLocale('es', es)
+
 
 const customStyles = {
   content: {
@@ -19,7 +23,7 @@ Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
   const [modalIsOpen, setModalIsOpen] = useState(true); 
-  
+
   const [formValues, setFormValues] = useState({
     title: "Titulo de prueba",
     notes: "Notas de prueba",
@@ -64,6 +68,9 @@ export const CalendarModal = () => {
             className="form-control"
             onChange={(event) => onDateChange(event, "start")}
             dateFormat="Pp"
+            showTimeSelect
+            locale="es"
+            timeCaption="Hora"
           />
         </div>
 
@@ -75,6 +82,9 @@ export const CalendarModal = () => {
             className="form-control"
             onChange={(event) => onDateChange(event, "end")}
             dateFormat="Pp"
+            showTimeSelect
+            locale="es"
+            timeCaption="Hora"
           />
         </div>
 
@@ -89,6 +99,7 @@ export const CalendarModal = () => {
             autoComplete="off"
             value={formValues.title}
             onChange={onInputChange}
+            locale="es"
           />
           <small id="emailHelp" className="form-text text-muted">
             Una descripción corta
