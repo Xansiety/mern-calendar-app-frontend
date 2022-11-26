@@ -1,47 +1,18 @@
 import { Calendar } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { addHours } from "date-fns";
 import { NavBar, CalendarEvent, CalendarModal } from "../";
 import { localizer, getMessagesCalendarES } from "../../helpers";
 import { useState } from "react";
-import { useUiStore } from "../../hooks";
-
-const events = [
-  {
-    title: "Cumpleaños del jefe",
-    notes: "Some notes about this event",
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: "#f0f0f0",
-    user: {
-      _id: "123",
-      name: "xansiety",
-    },
-  },
-];
+import { useUiStore, useCalendarStore } from "../../hooks";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { eventStyleGetter } from "../uiHelpers/stylesModal";
 
 export const CalendarPage = () => {
-
-  const {openDateModal} = useUiStore();
+  const { events } = useCalendarStore();
+  const { openDateModal } = useUiStore();
 
   const [lastView, setLastView] = useState(
     localStorage.getItem("lastView") || "week"
   );
-
-  const eventStyleGetter = (event, start, end, isSelected) => {
-    // console.log({ event, start, end, isSelected });
-
-    const style = {
-      backgroundColor: "#367cf7",
-      borderRadius: "0px",
-      opacity: 0.8,
-      color: "white",
-    };
-
-    return {
-      style,
-    };
-  };
 
   const onDoubleClick = (event) => {
     // console.log("onDoubleClick", event);
