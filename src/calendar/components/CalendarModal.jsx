@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
 import { addHours, differenceInSeconds } from "date-fns";
 import DatePicker, { registerLocale } from "react-datepicker";
 import Modal from "react-modal";
 import es from "date-fns/locale/es";
-import { useUiStore } from "../../hooks";
+import { useCalendarStore, useUiStore } from "../../hooks";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "sweetalert2/dist/sweetalert2.min.css";
@@ -12,24 +12,31 @@ import { customModalStyles } from "../uiHelpers/stylesModal";
 
 registerLocale("es", es);
 Modal.setAppElement("#root");
-  
-export const CalendarModal = () => {
 
-  const { isDateModalOpen , closeDateModal} = useUiStore();
- 
+export const CalendarModal = () => {
+  const { isDateModalOpen, closeDateModal } = useUiStore();
+  const { activeEvent } = useCalendarStore();
+
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [formValues, setFormValues] = useState({
-    title: "Titulo de prueba",
-    notes: "Notas de prueba",
+    title: "",
+    notes: "",
     start: new Date(),
     end: addHours(new Date(), 2),
   });
 
   const titleClass = useMemo(() => {
-    if (!formSubmitted) return ""; 
+    if (!formSubmitted) return "";
     return formValues.title.length > 0 ? "" : "is-invalid";
   }, [formValues.title, formSubmitted]);
+
+
+  useEffect(() => {
+    if (activeEvent !== null){
+      setFormValues({...activeEvent});
+    }   
+  }, [activeEvent]);
 
   const onInputChange = ({ target }) => {
     setFormValues({
@@ -45,7 +52,7 @@ export const CalendarModal = () => {
     });
   };
 
-  const onCloseModal = () => { 
+  const onCloseModal = () => {
     closeDateModal();
   };
 
