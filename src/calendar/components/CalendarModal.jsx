@@ -4,27 +4,19 @@ import { addHours, differenceInSeconds } from "date-fns";
 import DatePicker, { registerLocale } from "react-datepicker";
 import Modal from "react-modal";
 import es from "date-fns/locale/es";
+import { useUiStore } from "../../hooks";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "sweetalert2/dist/sweetalert2.min.css";
+import { customModalStyles } from "../uiHelpers/stylesModal";
 
 registerLocale("es", es);
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
-
 Modal.setAppElement("#root");
-
+  
 export const CalendarModal = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
+
+  const { isDateModalOpen , closeDateModal} = useUiStore();
+ 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [formValues, setFormValues] = useState({
@@ -53,8 +45,8 @@ export const CalendarModal = () => {
     });
   };
 
-  const onCloseModal = () => {
-    setModalIsOpen(false);
+  const onCloseModal = () => { 
+    closeDateModal();
   };
 
   const onSubmit = (event) => {
@@ -78,15 +70,15 @@ export const CalendarModal = () => {
     console.log({ dataToSend: formValues });
 
     // cerrar el modal
-    setModalIsOpen(false);
+    closeDateModal();
     //Remover errores en pantalla
   };
 
   return (
     <Modal
-      isOpen={modalIsOpen}
+      isOpen={isDateModalOpen}
       onRequestClose={onCloseModal}
-      style={customStyles}
+      style={customModalStyles}
       className="modal"
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
