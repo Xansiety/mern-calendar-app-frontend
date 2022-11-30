@@ -20,7 +20,8 @@ export const LoginPage = () => {
 
 
   useEffect(() => {
-    if(errorMessage !== undefined)
+    console.log(errorMessage)
+    if(  errorMessage !== "")
     {
        Swal.fire('Error en la autenticación', errorMessage, 'error')
     }   

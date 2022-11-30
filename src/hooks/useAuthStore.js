@@ -40,7 +40,7 @@ export const useAuthStore = () => {
 
   const checkAuthToken = async() =>{
     const token = localStorage.getItem("token")
-    if(!token) return  dispatch(onLogOut('Token expiro')) // el token ya expiro
+    if(!token) return  dispatch(onLogOut()) // el token ya expiro
       try {
         const {data} = await calendarApi.get('/auth/renew'); 
         localStorage.setItem("token", data.token )
