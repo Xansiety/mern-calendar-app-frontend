@@ -45,13 +45,18 @@ export const useAuthStore = () => {
         const {data} = await calendarApi.get('/auth/renew'); 
         localStorage.setItem("token", data.token )
         localStorage.setItem("token-init-date", new Date().getTime());
-        dispatch(onLogin({name: data.name, uid: data.uid}))         
+        dispatch(onLogin({name: data.nombre, uid: data.uid}))         
         console.log('Se renovó el token mediante checkAuthToken')
       } catch (error) {
         console.log(error)
         dispatch(onLogOut())
         localStorage.clear()         
       }
+  }
+ 
+  const startLogout = () => {
+    localStorage.clear();
+    dispatch(onLogOut())
   }
 
   return {
@@ -62,6 +67,7 @@ export const useAuthStore = () => {
     //* Methods
     checkAuthToken,
     startLogin,
+    startLogout,
     startRegister,
   };
 };
