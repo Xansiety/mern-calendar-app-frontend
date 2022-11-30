@@ -8,7 +8,7 @@ const loginForm = {
   loginPassword: "Abc123!",
 };
 
-const registerForm = {
+const registerForm = { 
   registerName: "",
   registerEmail: "",
   registerPassword: "",
@@ -16,7 +16,7 @@ const registerForm = {
 };
 
 export const LoginPage = () => { 
-  const { startLogin , errorMessage} = useAuthStore() 
+  const { startLogin , startRegister, errorMessage} = useAuthStore() 
 
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const LoginPage = () => {
   } = useForm(loginForm);
 
   const onLoginSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); 
     startLogin({ email: loginEmail,password:  loginPassword }); 
   };
 
@@ -48,13 +48,22 @@ export const LoginPage = () => {
   } = useForm(registerForm);
 
   const onRegisterSubmit = (event) => {
-    event.preventDefault();
-    console.log({
-      registerName,
-      registerEmail,
-      registerPassword,
-      registerPassword2,
-    });
+    event.preventDefault();  
+
+
+    if(registerPassword !== registerPassword2)
+    {
+      Swal.fire('Error en el registro', 'Contraseñas no son validas', 'error')
+      return
+    } 
+    startRegister({
+      nombre: registerName,
+      email: registerEmail,
+      password: registerPassword,
+      rePassword: registerPassword2,
+      rol: "USER_ROLE"
+    })
+    
   };
 
   return (

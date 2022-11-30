@@ -12,11 +12,25 @@ export const useAuthStore = () => {
         const { data } = await calendarApi.post('/auth/login', { email, password })
         localStorage.setItem("token", data.token )
         localStorage.setItem("token-init-date", new Date().getTime());
-        dispatch(onLogin({name: data.name, uid: data.uid}))
-
-         console.log('Login success')
+        dispatch(onLogin({name: data.name, uid: data.uid})) 
     } catch (error) {
          dispatch(onLogOut('Credenciales incorrectas'))
+         setTimeout(() => {
+            dispatch(clearErrorMessage())
+         }, 10);
+    }
+  };
+ 
+  const startRegister = async ({ nombre,email,password,rePassword,rol}) => {  
+    dispatch(onChecking())
+    try {
+        const { data } = await calendarApi.post('/auth/register', { nombre,email,password,rePassword,rol})
+        console.log({data})
+        localStorage.setItem("token", data.token )
+        localStorage.setItem("token-init-date", new Date().getTime());
+        dispatch(onLogin({name: data.name, uid: data.uid}))         
+    } catch (error) { 
+         dispatch(onLogOut('Ocurrió un error durante el registro' + ', ' + error.response.data.errors[0].msg))
          setTimeout(() => {
             dispatch(clearErrorMessage())
          }, 10);
@@ -30,5 +44,6 @@ export const useAuthStore = () => {
     errorMessage,
     //* Methods
     startLogin,
+    startRegister
   };
 };
