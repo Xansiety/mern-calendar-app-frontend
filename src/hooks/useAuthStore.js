@@ -37,13 +37,31 @@ export const useAuthStore = () => {
     }
   };
 
+
+  const checkAuthToken = async() =>{
+    const token = localStorage.getItem("token")
+    if(!token) return  dispatch(onLogOut('Token expiro')) // el token ya expiro
+      try {
+        const {data} = await calendarApi.get('/auth/renew'); 
+        localStorage.setItem("token", data.token )
+        localStorage.setItem("token-init-date", new Date().getTime());
+        dispatch(onLogin({name: data.name, uid: data.uid}))         
+        console.log('Se renovó el token mediante checkAuthToken')
+      } catch (error) {
+        console.log(error)
+        dispatch(onLogOut())
+        localStorage.clear()         
+      }
+  }
+
   return {
     //* Properties
     status,
     user,
     errorMessage,
     //* Methods
+    checkAuthToken,
     startLogin,
-    startRegister
+    startRegister,
   };
 };
