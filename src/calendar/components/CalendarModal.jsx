@@ -4,7 +4,7 @@ import { addHours, differenceInSeconds } from "date-fns";
 import DatePicker, { registerLocale } from "react-datepicker";
 import Modal from "react-modal";
 import es from "date-fns/locale/es";
-import { useCalendarStore, useUiStore } from "../../hooks";
+import { useAuthStore, useCalendarStore, useUiStore } from "../../hooks";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "sweetalert2/dist/sweetalert2.min.css";
@@ -14,8 +14,13 @@ registerLocale("es", es);
 Modal.setAppElement("#root");
 
 export const CalendarModal = () => {
+
+  const {user} = useAuthStore();
+
   const { isDateModalOpen, closeDateModal } = useUiStore();
   const { activeEvent, startSavingEvent } = useCalendarStore();
+
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -37,6 +42,20 @@ export const CalendarModal = () => {
       setFormValues({...activeEvent});
     }   
   }, [activeEvent]);
+
+
+
+  useEffect(() => {
+    console.log(user.uid ,activeEvent?.user?.uid)
+    if(user.uid === activeEvent?.user?.uid){
+      setIsDisabled(false);
+    }
+    else{
+      setIsDisabled(true);
+    }
+  }, [activeEvent]);
+
+
 
   const onInputChange = ({ target }) => {
     setFormValues({
@@ -152,7 +171,7 @@ export const CalendarModal = () => {
           </small>
         </div>
 
-        <button type="submit" className="btn btn-outline-primary btn-block">
+        <button type="submit" className="btn btn-outline-primary btn-block" disabled={isDisabled}>
           <i className="far fa-save"></i>
           <span> Guardar</span>
         </button>
