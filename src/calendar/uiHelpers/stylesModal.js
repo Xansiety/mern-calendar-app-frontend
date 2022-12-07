@@ -10,11 +10,15 @@ export const customModalStyles = {
 };
 
 
-export const eventStyleGetter = (event, start, end, isSelected) => {
+export const eventStyleGetter = (event, start, end, isSelected, user) => {
   // console.log({ event, start, end, isSelected });
 
+  const isMyEvent = event.user._id === user._id ;
+
+  console.log(isMyEvent)
+
   const style = {
-    backgroundColor: "#367cf7",
+    backgroundColor: isMyEvent ? "#367cf7" : "#465660",
     borderRadius: "0px",
     opacity: 0.8,
     color: "white",
