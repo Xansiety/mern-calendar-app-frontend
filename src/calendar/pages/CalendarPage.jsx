@@ -26,13 +26,11 @@ export const CalendarPage = () => {
   const onViewChange = (event) => {
     localStorage.setItem("lastView", event);
   };
-
-
+ 
   useEffect(() => {
     startLoadingEvents()   
   },[])
-  
-
+   
   return (
     <>
       <NavBar />
@@ -44,7 +42,7 @@ export const CalendarPage = () => {
         defaultView={lastView}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: "calc( 100vh - 80px)" }}
+        style={{ height: "calc( 100vh - 90px)" }}
         messages={getMessagesCalendarES()}
         eventPropGetter={eventStyleGetter}
         components={{
