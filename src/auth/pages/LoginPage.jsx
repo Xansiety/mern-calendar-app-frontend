@@ -4,8 +4,8 @@ import { useAuthStore, useForm } from "../../hooks";
 import "./LoginPage.css";
 
 const loginForm = {
-  loginEmail: "test@test.com",
-  loginPassword: "Abc123!",
+  loginEmail: "",
+  loginPassword: "",
 };
 
 const registerForm = { 
@@ -20,7 +20,7 @@ export const LoginPage = () => {
 
 
   useEffect(() => {
-    console.log(errorMessage)
+    // console.log(errorMessage)
     if(  errorMessage !== "")
     {
        Swal.fire('Error en la autenticación', errorMessage, 'error')

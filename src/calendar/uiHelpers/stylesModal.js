@@ -15,7 +15,7 @@ export const eventStyleGetter = (event, start, end, isSelected, user) => {
 
   const isMyEvent = event.user._id === user._id ;
 
-  console.log(isMyEvent)
+  // console.log(isMyEvent)
 
   const style = {
     backgroundColor: isMyEvent ? "#367cf7" : "#465660",

@@ -46,7 +46,7 @@ export const CalendarModal = () => {
 
 
   useEffect(() => {
-    console.log(user.uid ,activeEvent?.user?.uid)
+    // console.log(user.uid ,activeEvent?.user?.uid)
     if(user.uid === activeEvent?.user?.uid){
       setIsDisabled(false);
     }
@@ -92,7 +92,7 @@ export const CalendarModal = () => {
     if (formValues.title.trim().length <= 0) {
       return;
     }
-    console.log({ dataToSend: formValues });
+    // console.log({ dataToSend: formValues });
     
     await startSavingEvent(formValues); 
     closeDateModal(); 
