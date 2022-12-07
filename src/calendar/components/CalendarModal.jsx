@@ -73,7 +73,8 @@ export const CalendarModal = () => {
     if (formValues.title.trim().length <= 0) {
       return;
     }
-    // console.log({ dataToSend: formValues });
+    console.log({ dataToSend: formValues });
+    
     await startSavingEvent(formValues); 
     closeDateModal(); 
     setFormSubmitted(false);
