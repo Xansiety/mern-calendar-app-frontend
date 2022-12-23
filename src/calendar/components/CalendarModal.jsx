@@ -45,15 +45,16 @@ export const CalendarModal = () => {
 
 
 
-  useEffect(() => {
-    // console.log(user.uid ,activeEvent?.user?.uid)
-    if(activeEvent?.title !== "" && user.uid === activeEvent?.user?.uid){
-      setIsDisabled(false);
-    }
-    else{
-      setIsDisabled(true);
-    }
-  }, [activeEvent]);
+  // disabled={isDisabled}
+  // useEffect(() => {
+  //   // console.log(user.uid ,activeEvent?.user?.uid)
+  //   if(activeEvent?.title !== "" && user.uid === activeEvent?.user?.uid){
+  //     setIsDisabled(false);
+  //   }
+  //   else{
+  //     setIsDisabled(true);
+  //   }
+  // }, [activeEvent]);
 
 
 
@@ -171,7 +172,7 @@ export const CalendarModal = () => {
           </small>
         </div>
 
-        <button type="submit" className="btn btn-outline-primary btn-block" disabled={isDisabled}>
+        <button type="submit" className="btn btn-outline-primary btn-block">
           <i className="far fa-save"></i>
           <span> Guardar</span>
         </button>
