@@ -47,7 +47,7 @@ export const CalendarModal = () => {
 
   useEffect(() => {
     // console.log(user.uid ,activeEvent?.user?.uid)
-    if(activeEvent.title !== "" && user.uid === activeEvent?.user?.uid){
+    if(activeEvent?.title !== "" && user.uid === activeEvent?.user?.uid){
       setIsDisabled(false);
     }
     else{
